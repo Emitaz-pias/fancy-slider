@@ -8,14 +8,11 @@ const sliderContainer = document.getElementById("sliders");
 // selected image
 let sliders = [];
 
-
-
 // spinner
-spinnerShower=()=>{
-  const spinner = document.getElementById("loading-spiner")
-  spinner.classList.toggle('d-none')
-}
-
+spinnerShower = () => {
+  const spinner = document.getElementById("loading-spiner");
+  spinner.classList.toggle("d-none");
+};
 
 // If this key doesn't work
 // Find the name in the url and go to their website
@@ -29,13 +26,13 @@ const getImages = (query) => {
     .then((response) => response.json())
     .then((data) => showImages(data.hits))
     .catch((err) => console.log(err));
-    spinnerShower()
-  };
+  spinnerShower();
+};
 
 // show images
 const showImages = (images) => {
   imagesArea.style.display = "block";
-  spinnerShower()
+  spinnerShower();
 
   gallery.innerHTML = "";
   // show gallery title
@@ -100,7 +97,6 @@ const createSlider = () => {
   } else {
     alert("hey!!!! time can't be negative");
   }
-
 };
 
 // change slider index
@@ -145,4 +141,3 @@ document.getElementById("search").addEventListener("keypress", (event) => {
     document.getElementById("search-btn").click();
   }
 });
-
