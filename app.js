@@ -8,21 +8,35 @@ const sliderContainer = document.getElementById("sliders");
 // selected image
 let sliders = [];
 
+
+
+// spinner
+spinnerShower=()=>{
+  const spinner = document.getElementById("loading-spiner")
+  spinner.classList.toggle('d-none')
+}
+
+
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
 const KEY = "15674931-a9d714b6e9d654524df198e00&q";
-// spinner shower
-const spinnerShower =(state)=>{
-  if(state==false){
-  const element = document.getElementById('loading-spiner').classList.remove="d-none"}
-
-}
-
+// get images
+const getImages = (query) => {
+  fetch(
+    `https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
+  )
+    .then((response) => response.json())
+    .then((data) => showImages(data.hits))
+    .catch((err) => console.log(err));
+    spinnerShower()
+  };
 
 // show images
 const showImages = (images) => {
   imagesArea.style.display = "block";
+  spinnerShower()
+
   gallery.innerHTML = "";
   // show gallery title
   galleryHeader.style.display = "flex";
@@ -31,19 +45,9 @@ const showImages = (images) => {
     div.className = "col-lg-3 col-md-4 col-xs-6 img-item mb-2";
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
-
   });
 };
-const getImages = (query) => {
-  fetch(
-    `https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
-  )
-    .then((response) => response.json())
-    .then((data) => showImages(data.hits))
-    .catch((err) => console.log(err));
-    spinnerShower(true);
 
-  };
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
@@ -130,9 +134,7 @@ searchBtn.addEventListener("click", function () {
   const search = document.getElementById("search");
   getImages(search.value);
   sliders.length = 0;
-
 });
-spinnerShower(false);
 
 sliderBtn.addEventListener("click", function () {
   createSlider();
